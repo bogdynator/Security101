@@ -32,8 +32,6 @@ contract OptimizedAttackerSecurity101 {
 }
 
 contract OptimizedAttackerSecurity102 {
-    uint256 balance = 1 ether;
-
     function attack(Target target) external payable {
         target.deposit{ value: msg.value }();
         target.withdraw(msg.value);
