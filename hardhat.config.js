@@ -5,9 +5,13 @@ module.exports = {
     solidity: {
         version: '0.8.15',
         settings: {
+            metadata: {
+                // Not including the metadata hash
+                bytecodeHash: 'none',
+            },
             optimizer: {
                 enabled: true,
-                runs: 1000000,
+                runs: 400,
             },
         },
     },
